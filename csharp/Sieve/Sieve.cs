@@ -47,12 +47,12 @@ public class SieveImplementation : ISieve
 			previousLimit = limit;
 		}
 
-		return (long)primes[(int)n];
+		return primes[(int)n];
 	}
 
-	public static List<double> SieveRange(long low, long high, List<double> existingPrimes)
+	public static List<long> SieveRange(long low, long high, List<long> existingPrimes)
 	{
-		List<double> newPrimes = new List<double>();
+		List<long> newPrimes = new List<long>();
 		int rangeSize = (int)(high - low + 1);
 
 		if (rangeSize <= 0)
@@ -63,15 +63,14 @@ public class SieveImplementation : ISieve
 
 		foreach (var prime in existingPrimes)
 		{
-			int p = (int)prime;
-			if (p > sqrtHigh)
+			if (prime > sqrtHigh)
 				break;
 
-			long firstMultiple = ((low + p - 1) / p) * p;
-			if (firstMultiple < p * p)
-				firstMultiple = p * p;
+			long firstMultiple = ((low + prime - 1) / prime) * prime;
+			if (firstMultiple < prime * prime)
+				firstMultiple = prime * prime;
 
-			for (long j = firstMultiple; j <= high; j += p)
+			for (long j = firstMultiple; j <= high; j += prime)
 			{
 				isComposite[j - low] = true;
 			}
@@ -90,9 +89,9 @@ public class SieveImplementation : ISieve
 		return newPrimes;
 	}
 
-	public static List<double> Sieve(double limit)
+	public static List<long> Sieve(long limit)
 	{
-		List<double> primes = new List<double>();
+		List<long> primes = new List<long>();
 		int intLimit = (int)limit;
 
 		if (intLimit < 2)
@@ -111,14 +110,11 @@ public class SieveImplementation : ISieve
 			{
 				for (int j = i * i; j <= intLimit; j += i)
 				{
-					// Mark composites
 					isComposite[j] = true;
 				}
 			}
 		}
 
-
-		// Collect primes
 		for (int i = 2; i <= intLimit; i++)
 		{
 			if (!isComposite[i])

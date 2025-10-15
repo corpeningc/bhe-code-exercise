@@ -7,6 +7,14 @@ namespace Sieve.Tests
 	public class UnitTest1
 	{
 		[TestMethod]
+		[DataRow(99, 541)]
+		public void TestSpecificNthPrime(int n, int result)
+		{
+			ISieve sieve = new SieveImplementation();
+			Assert.AreEqual(result, sieve.NthPrime(n));
+		}
+
+		[TestMethod]
 		public void TestNthPrime()
 		{
 			ISieve sieve = new SieveImplementation();
@@ -19,25 +27,25 @@ namespace Sieve.Tests
 			Assert.AreEqual(15_485_867, sieve.NthPrime(1_000_000));
 
 			Assert.AreEqual(179_424_691, sieve.NthPrime(10_000_000));
-			//Assert.AreEqual(2_038_074_751, sieve.NthPrime(100_000_000)); not required, just a fun challenge
+			Assert.AreEqual(2_038_074_751, sieve.NthPrime(100_000_000)); // not required, just a fun challenge
 		}
 
 		[TestMethod]
-		public void TestEstimation_NLessThanSix_Returns15()
+		[DataRow(5)]
+		[DataRow(4)]
+		[DataRow(3)]
+		[DataRow(2)]
+		[DataRow(1)]
+		public void TestEstimation_NLessThanSix_Returns15(int n)
 		{
-			Assert.AreEqual(15, SieveImplementation.EstimateNthPrime(5));
-			Assert.AreEqual(15, SieveImplementation.EstimateNthPrime(4));
-			Assert.AreEqual(15, SieveImplementation.EstimateNthPrime(3));
-			Assert.AreEqual(15, SieveImplementation.EstimateNthPrime(2));
-			Assert.AreEqual(15, SieveImplementation.EstimateNthPrime(1));
-			Assert.AreEqual(15, SieveImplementation.EstimateNthPrime(1));
+			Assert.AreEqual(15, SieveImplementation.EstimateNthPrime(n));
 		}
 
 		[TestMethod]
 		public void TestEstimation()
 		{
-			Assert.AreEqual(30, SieveImplementation.EstimateNthPrime(10));
-			Assert.AreEqual(17, SieveImplementation.EstimateNthPrime(6));
+			Assert.AreEqual(38, SieveImplementation.EstimateNthPrime(10));
+			Assert.AreEqual(18, SieveImplementation.EstimateNthPrime(6));
 		}
 
 		[TestMethod]
